@@ -3,6 +3,7 @@ WITH top_3_customers AS (
     customer_id,
     first_name,
     last_name,
+    city,
     ROUND(total_spending, 2) AS total_spending,
     RANK() OVER (ORDER BY total_spending DESC) AS spending_rank
  FROM {{ ref('int_localbike__customer_spending') }}

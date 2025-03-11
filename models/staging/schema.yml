@@ -1,3 +1,6 @@
+version: 2
+
+
 models:
 
   - name: stg_localbike__brands

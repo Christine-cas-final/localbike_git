@@ -1,0 +1,74 @@
+version: 2
+
+models:
+
+  - name: int_localbike__customer_orders
+    description: "Total des commandes après remise"
+    columns:
+      - name: customer_id
+        description: "ID unique du client"
+        tests:
+          - not_null
+      - name: first_name
+        description: "Prénom du client"
+      - name: last_name
+        description: "Nom du client"
+      - name: city
+        description: "Ville du client"
+      - name: order_id
+        description: "ID unique de la commande."
+        tests:
+          - not_null
+      - name: order_total_discounted
+        description: "Montant total de la commande après remise"
+
+  - name: int_localbike__customer_spending
+    description: "Total des commandes et revenu total des clients"
+    columns:
+      - name: customer_id
+        description: "ID unique du client"
+        tests:
+          - not_null
+          - unique
+      - name: first_name
+        description: "Prénom du client"
+      - name: last_name
+        description: "Nom de famille du client"
+      - name: city
+        description: "Ville du client"
+      - name: total_orders
+        description: "Nombre total de commandes passées par le client"
+        tests:
+          - not_null
+      - name: total_revenue
+        description: "Revenu total généré par le client."
+        tests:
+          - not_null
+
+  - name: int_localbike__average_order_value
+    description: "Valeur moyenne des commandes"
+    columns:
+      - name: global_average_order_value
+        description: "Valeur moyenne des commandes, obtenue en divisant le revenu total par le nombre total de commandes"
+        tests:
+          - not_null
+
+  - name: int_localbike__top_3_customers
+    description: "Classement des clients en fonction de leur dépense globale"
+    columns:
+      - name: customer_id
+        description: "ID unique du client."
+        tests:
+          - not_null
+      - name: first_name
+        description: "Prénom du client"
+      - name: last_name
+        description: "Nom de famille du client"
+      - name: total_revenue
+        description: "Montant total dépensé par le client"
+        tests:
+          - not_null
+      - name: revenue_rank
+        description: "Classement des 3 meilleurs clients, par ordre décroissant des dépenses"  
+        tests:
+          - not_null

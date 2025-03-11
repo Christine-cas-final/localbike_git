@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: mart_localbike__customer_analysis
+    description: "Analyse des clients avec leur total de commandes, total dépensé, panier moyen global et recherche des 3 meilleurs clients"
+    columns:
+      - name: customer_id
+        description: "ID unique du client"
+        tests:
+          - not_null
+          - unique
+
+      - name: first_name
+        description: "Prénom du client"
+
+      - name: last_name
+        description: "Nom du client"
+
+      - name: city
+        description: "Ville du client"
+
+      - name: total_orders
+        description: "Nombre total de commandes"
+        tests:
+          - not_null
+
+      - name: total_spending
+        description: "Montant total dépensé par le client"
+        tests:
+          - not_null
+
+      - name: global_average_order_value
+        description: "Valeur moyenne des commandes, obtenue en divisant le revenu total par le nombre total de commandes"
+        tests:
+          - not_null
+
+      - name: top_3_flag
+        description: "Identifie les 3 meilleurs clients"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Top 3', 'Other']

@@ -1,0 +1,149 @@
+version: 2
+
+
+models:
+
+  - name: stg_localbike__brands
+    description: "Table staging brands"
+    columns:
+      - name: brand_id
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_localbike__products')
+              field: brand_id
+
+
+
+  - name: stg_localbike__categories
+    description: "Table staging categories"
+    columns:
+      - name: category_id
+        tests:
+         - not_null
+         - unique              
+
+
+  - name: stg_localbike__customers
+    description: "Table staging customers"
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+
+  - name: stg_localbike__order_items
+    description: "Table staging order items"
+    columns:
+      - name: order_item_id
+        tests:
+          - not_null
+          - unique
+      - name: order_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__orders')
+              field: order_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__products')
+              field: product_id
+
+  - name: stg_localbike__orders
+    description: "Table staging orders"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__customers')
+              field: customer_id
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__stores')
+              field: store_id
+      - name: staff_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__staffs')
+              field: staff_id             
+                      
+
+  - name: stg_localbike__products
+    description: "Table staging products"
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+      - name: brand_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__brands')
+              field: brand_id
+      - name: category_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__categories')
+              field: category_id
+      - name: product_name_cleaned
+        tests:
+          - dbt_expectations.expect_column_to_exist         
+      
+
+  - name: stg_localbike__staffs
+    description: "Table staging staffs"
+    columns:
+      - name: staff_id
+        tests:
+          - not_null
+          - unique
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__stores')
+              field: store_id
+      - name: manager_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__staffs')
+              field: staff_id
+
+ 
+  - name: stg_localbike__stocks
+    description: "Table staging stocks"
+    columns:
+      - name: stock_id
+        tests:
+          - not_null
+          - unique
+          
+        
+      - name: store_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__stores')
+              field: store_id
+      - name: product_id
+        tests:
+          - relationships:
+              to: ref('stg_localbike__products')
+              field: product_id
+
+
+  - name: stg_stores
+    description: "Table staging stores"
+    columns:
+      - name: store_id
+        tests:
+          - not_null
+          - unique
+      
+   
